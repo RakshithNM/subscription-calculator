@@ -12,7 +12,9 @@
             class="form__field"
           >
             <span>{{ getSubscriptionLabel(index) }}</span>
-            <div class="form__control">
+            <div
+              :class="['form__control', { 'form__control--invalid': invalidInputs[index] }]"
+            >
               <input
                 :value="formatAmountInput(amount)"
                 type="text"
@@ -64,7 +66,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref, watch } from 'vue';
 import StatCard from '@/components/StatCard.vue';
 import { useSubscriptionStore } from '@/stores/subscription';
 
@@ -95,6 +97,25 @@ const parseAmountInput = (value: string) => {
   return digits ? Number.parseInt(digits, 10) : 0;
 };
 
+const invalidInputs = ref<boolean[]>(store.amounts.map(() => false));
+
+watch(
+  () => store.amounts.length,
+  (length) => {
+    if (length > invalidInputs.value.length) {
+      invalidInputs.value = [
+        ...invalidInputs.value,
+        ...Array.from({ length: length - invalidInputs.value.length }, () => false)
+      ];
+      return;
+    }
+
+    if (length < invalidInputs.value.length) {
+      invalidInputs.value = invalidInputs.value.slice(0, length);
+    }
+  }
+);
+
 const baseSubscriptionLabels = ['Netflix', 'Jio Hotstar', 'Amazon Prime Video'];
 
 const getSubscriptionLabel = (index: number) => {
@@ -107,6 +128,9 @@ const getSubscriptionLabel = (index: number) => {
 
 const updateAmount = (index: number, event: Event) => {
   const target = event.target as HTMLInputElement;
+  const rawValue = target.value;
+  const isNegative = rawValue.trim().startsWith('-');
+  invalidInputs.value[index] = isNegative;
   const nextValue = parseAmountInput(target.value);
   store.amounts[index] = nextValue;
 };
