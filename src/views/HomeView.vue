@@ -11,7 +11,7 @@
             :key="`amount-${index}`"
             class="form__field"
           >
-            <span>{{ subscriptionLabels[index] ?? `Subscription ${index + 1}` }}</span>
+            <span>{{ store.labels[index] ?? `Subscription ${index + 1}` }}</span>
             <div class="form__control">
               <input v-model.number="store.amounts[index]" type="number" min="0" step="1" />
               <span class="form__suffix">INR</span>
@@ -70,7 +70,6 @@ const formatter = new Intl.NumberFormat('en-IN', {
   maximumFractionDigits: 0
 });
 
-const subscriptionLabels = ['Netflix', 'Jio Hotstar', 'Amazon Prime Video'];
 const annualReturn = 0.123;
 const years = 10;
 
