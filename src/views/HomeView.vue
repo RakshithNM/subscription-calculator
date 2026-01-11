@@ -11,7 +11,7 @@
             :key="`amount-${index}`"
             class="form__field"
           >
-            <span>{{ getSubscriptionLabel(field) }}</span>
+            <span>{{ field.name }}</span>
             <div :class="['form__control', { 'form__control--invalid': invalidInputs[index] }]">
               <input
                 :value="formatAmountInput(field.amount)"
@@ -52,7 +52,7 @@
         <article class="summary__note">
           <h3>NIFTY SIP potential</h3>
           <p>
-            If you invested this monthly total as a SIP and earned a 12.3% annualized return for {{ years }}
+          If you invested this monthly total as a SIP and earned a {{ annualReturn * 100 }}% annualized return for {{ years }}
             years, it could grow to
             <strong class="summary__highlight">{{ formatCurrency(niftySipValue) }}</strong>.
           </p>
@@ -78,8 +78,8 @@ const inputFormatter = new Intl.NumberFormat('en-IN', {
   maximumFractionDigits: 0
 });
 
-const annualReturn = 0.123;
-const years = 5;
+const annualReturn = 0.13;
+const years = 10;
 
 const formatCurrency = (value: number) => formatter.format(value);
 const formatAmountInput = (value: number) => inputFormatter.format(Math.max(0, Math.round(value)));
@@ -112,10 +112,6 @@ watch(
     }
   }
 );
-
-const getSubscriptionLabel = (field: { "name": string, "amount": number }) => {
-  return field?.name;
-};
 
 const updateAmount = (index: number, event: Event) => {
   const target = event.target as HTMLInputElement;
