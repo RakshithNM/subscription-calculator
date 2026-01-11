@@ -27,26 +27,21 @@
           </label>
 
           <button class="form__button" type="button" @click="store.addAmount">
-            Add another amount
+            Add another subscription
           </button>
         </form>
       </section>
 
       <section class="summary">
         <StatCard
-          label="Monthly add-ons"
+          label="Monthly total"
           :value="formatCurrency(store.monthlyAddOnsTotal)"
-          hint="Combined optional charges"
-        />
-        <StatCard
-          label="Annual subtotal"
-          :value="formatCurrency(store.annualSubtotal)"
-          hint="Annualized subscription value"
+          hint="Monthly spend"
         />
         <StatCard
           label="Annual total"
-          :value="formatCurrency(store.annualTotal)"
-          hint="Projected revenue"
+          :value="formatCurrency(store.annualSubtotal)"
+          hint="Annualized subscription value"
         />
         <article class="summary__note">
           <h3>Built-in goodies</h3>
