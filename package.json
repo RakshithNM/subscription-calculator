@@ -7,12 +7,13 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint . --ext .ts,.tsx,.vue",
+    "lint": "eslint . --ext .ts,.tsx,.vue --fix",
     "format": "prettier --write .",
     "test": "vitest"
   },
   "dependencies": {
     "pinia": "^2.1.7",
+    "typescript-eslint": "^8.52.0",
     "vue": "^3.5.12",
     "vue-router": "^4.4.5"
   },

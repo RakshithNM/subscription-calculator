@@ -7,16 +7,14 @@
 
         <form class="form">
           <div
-            v-for="(amount, index) in store.amounts"
+            v-for="(field, index) in store.baseFields"
             :key="`amount-${index}`"
             class="form__field"
           >
-            <span>{{ getSubscriptionLabel(index) }}</span>
-            <div
-              :class="['form__control', { 'form__control--invalid': invalidInputs[index] }]"
-            >
+            <span>{{ getSubscriptionLabel(field) }}</span>
+            <div :class="['form__control', { 'form__control--invalid': invalidInputs[index] }]">
               <input
-                :value="formatAmountInput(amount)"
+                :value="formatAmountInput(field.amount)"
                 type="text"
                 inputmode="numeric"
                 pattern="[0-9]*"
@@ -24,7 +22,7 @@
               />
               <span class="form__suffix">INR</span>
               <button
-                v-if="store.amounts.length > 1"
+                v-if="store.baseFields.length > 1"
                 class="form__remove"
                 type="button"
                 @click="store.removeAmount(index)"
@@ -54,10 +52,9 @@
         <article class="summary__note">
           <h3>NIFTY SIP potential</h3>
           <p>
-            If you invested this monthly total as a SIP and earned a 12.3% annualized return for
-            10 years, it could grow to
-            <strong class="summary__highlight">{{ formatCurrency(niftySipValue) }}</strong
-            >.
+            If you invested this monthly total as a SIP and earned a 12.3% annualized return for {{ years }}
+            years, it could grow to
+            <strong class="summary__highlight">{{ formatCurrency(niftySipValue) }}</strong>.
           </p>
         </article>
       </section>
@@ -82,7 +79,7 @@ const inputFormatter = new Intl.NumberFormat('en-IN', {
 });
 
 const annualReturn = 0.123;
-const years = 10;
+const years = 5;
 
 const formatCurrency = (value: number) => formatter.format(value);
 const formatAmountInput = (value: number) => inputFormatter.format(Math.max(0, Math.round(value)));
@@ -97,10 +94,10 @@ const parseAmountInput = (value: string) => {
   return digits ? Number.parseInt(digits, 10) : 0;
 };
 
-const invalidInputs = ref<boolean[]>(store.amounts.map(() => false));
+const invalidInputs = ref<boolean[]>(store.baseFields.map(() => false));
 
 watch(
-  () => store.amounts.length,
+  () => store.baseFields.length,
   (length) => {
     if (length > invalidInputs.value.length) {
       invalidInputs.value = [
@@ -116,14 +113,8 @@ watch(
   }
 );
 
-const baseSubscriptionLabels = ['Netflix', 'Jio Hotstar', 'Amazon Prime Video'];
-
-const getSubscriptionLabel = (index: number) => {
-  if (index < baseSubscriptionLabels.length) {
-    return baseSubscriptionLabels[index];
-  }
-
-  return `Subscription ${index - baseSubscriptionLabels.length + 1}`;
+const getSubscriptionLabel = (field: { "name": string, "amount": number }) => {
+  return field?.name;
 };
 
 const updateAmount = (index: number, event: Event) => {
@@ -132,13 +123,17 @@ const updateAmount = (index: number, event: Event) => {
   const isNegative = rawValue.trim().startsWith('-');
   invalidInputs.value[index] = isNegative;
   const nextValue = parseAmountInput(target.value);
-  store.amounts[index] = nextValue;
+  store.baseFields[index].amount = nextValue;
 };
 
 const niftySipValue = computed(() => {
-  const monthlyRate = Math.pow((1 + annualReturn), (1 / 12)) - 1;
+  const monthlyRate = Math.pow(1 + annualReturn, 1 / 12) - 1;
   const totalMonths = years * 12;
-  return store.monthlyAddOnsTotal * ((Math.pow(1 + monthlyRate, totalMonths) - 1) / monthlyRate) * (1 + monthlyRate);
+  return (
+    store.monthlyAddOnsTotal *
+    ((Math.pow(1 + monthlyRate, totalMonths) - 1) / monthlyRate) *
+    (1 + monthlyRate)
+  );
 });
 </script>
 
