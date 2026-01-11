@@ -11,9 +11,23 @@
             :key="`amount-${index}`"
             class="form__field"
           >
-            <span>{{ store.labels[index] ?? `Subscription ${index + 1}` }}</span>
+            <span>Subscription {{ index + 1 }}</span>
+            <div class="form__control" :class="{ 'form__control--invalid': isLabelEmpty(index) }">
+              <input
+                :value="labelValue(index)"
+                type="text"
+                placeholder="Label (e.g. Netflix)"
+                @input="updateLabel(index, $event)"
+              />
+            </div>
             <div class="form__control">
-              <input v-model.number="store.amounts[index]" type="number" min="0" step="1" />
+              <input
+                :value="formatAmountInput(amount)"
+                type="text"
+                inputmode="numeric"
+                pattern="[0-9]*"
+                @input="updateAmount(index, $event)"
+              />
               <span class="form__suffix">INR</span>
               <button
                 v-if="store.amounts.length > 1"
@@ -69,14 +83,42 @@ const formatter = new Intl.NumberFormat('en-IN', {
   currency: 'INR',
   maximumFractionDigits: 0
 });
+const inputFormatter = new Intl.NumberFormat('en-IN', {
+  maximumFractionDigits: 0
+});
 
 const annualReturn = 0.123;
 const years = 10;
 
 const formatCurrency = (value: number) => formatter.format(value);
+const formatAmountInput = (value: number) => inputFormatter.format(Math.max(0, Math.round(value)));
+
+const labelValue = (index: number) => store.labels[index] ?? '';
+const isLabelEmpty = (index: number) => !labelValue(index).trim();
+
+const updateLabel = (index: number, event: Event) => {
+  const target = event.target as HTMLInputElement;
+  store.labels[index] = target.value;
+};
+
+const parseAmountInput = (value: string) => {
+  const trimmed = value.trim();
+  if (!trimmed || trimmed.startsWith('-')) {
+    return 0;
+  }
+
+  const digits = trimmed.replace(/[^\d]/g, '');
+  return digits ? Number.parseInt(digits, 10) : 0;
+};
+
+const updateAmount = (index: number, event: Event) => {
+  const target = event.target as HTMLInputElement;
+  const nextValue = parseAmountInput(target.value);
+  store.amounts[index] = nextValue;
+};
 
 const niftySipValue = computed(() => {
-  const monthlyRate = Math.pow((1 + annualReturn), (1/12)) - 1;
+  const monthlyRate = Math.pow((1 + annualReturn), (1 / 12)) - 1;
   const totalMonths = years * 12;
   return store.monthlyAddOnsTotal * ((Math.pow(1 + monthlyRate, totalMonths) - 1) / monthlyRate) * (1 + monthlyRate);
 });
