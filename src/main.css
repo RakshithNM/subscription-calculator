@@ -101,6 +101,7 @@ body {
 .form__control {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 0.75rem;
   background: #f1f5f9;
   padding: 0.65rem 0.85rem;
@@ -121,6 +122,7 @@ body {
   border: none;
   background: transparent;
   font-size: 1rem;
+  min-width: 0;
   width: 100%;
   color: #0f172a;
   outline: none;
@@ -207,4 +209,64 @@ body {
 
 .summary__note li {
   color: #cbd5f5;
+}
+
+@media (max-width: 900px) {
+  #app {
+    padding: 2.5rem 1.25rem 3rem;
+  }
+
+  .app__header {
+    align-items: flex-start;
+  }
+
+  .app__nav a {
+    display: inline-flex;
+    justify-content: center;
+  }
+
+  .panel,
+  .summary {
+    padding: 1.75rem;
+  }
+}
+
+@media (max-width: 640px) {
+  #app {
+    padding: 2rem 1rem 2.5rem;
+  }
+
+  .app__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .app__subtitle {
+    max-width: 100%;
+  }
+
+  .app__nav a {
+    width: 100%;
+  }
+
+  .panel,
+  .summary {
+    padding: 1.5rem;
+  }
+
+  .form__button {
+    width: 100%;
+  }
+
+  .form__control {
+    align-items: stretch;
+  }
+
+  .form__remove {
+    margin-left: auto;
+  }
+
+  .stat-card__value {
+    font-size: 1.6rem;
+  }
 }
