@@ -48,7 +48,7 @@
           <p>
             If you invested this monthly total as a SIP and earned a 12.3% annualized return for
             10 years, it could grow to
-            <strong>{{ formatCurrency(niftySipValue) }}</strong
+            <strong class="summary__highlight">{{ formatCurrency(niftySipValue) }}</strong
             >.
           </p>
         </article>
@@ -82,3 +82,16 @@ const niftySipValue = computed(() => {
   return store.monthlyAddOnsTotal * ((Math.pow(1 + monthlyRate, totalMonths) - 1) / monthlyRate) * (1 + monthlyRate);
 });
 </script>
+
+<style scoped>
+.summary__highlight {
+  background: rgba(255, 196, 64, 0.25);
+  border-radius: 999px;
+  box-shadow: 0 0 0 1px rgba(255, 196, 64, 0.45);
+  color: inherit;
+  display: inline-block;
+  font-size: 1.25rem;
+  font-weight: 700;
+  padding: 0.15rem 0.6rem;
+}
+</style>
