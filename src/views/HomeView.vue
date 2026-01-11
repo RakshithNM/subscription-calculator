@@ -21,40 +21,34 @@
             </div>
           </label>
 
-          <label class="form__field">
-            <span>Team members</span>
+          <label
+            v-for="(amount, index) in store.amounts"
+            :key="`amount-${index}`"
+            class="form__field"
+          >
+            <span>Amount {{ index + 1 }}</span>
             <div class="form__control">
-              <input v-model.number="store.teamMembers" type="number" min="1" step="1" />
-              <span class="form__suffix">seats</span>
+              <input v-model.number="store.amounts[index]" type="number" min="0" step="1" />
+              <span class="form__suffix">USD</span>
             </div>
           </label>
 
-          <label class="form__field">
-            <span>Annual discount</span>
-            <div class="form__control">
-              <input
-                v-model.number="store.discountPercent"
-                type="number"
-                min="0"
-                max="50"
-                step="1"
-              />
-              <span class="form__suffix">%</span>
-            </div>
-          </label>
+          <button class="form__button" type="button" @click="store.addAmount">
+            Add another amount
+          </button>
         </form>
       </section>
 
       <section class="summary">
         <StatCard
-          label="Annual subtotal"
-          :value="formatCurrency(store.annualSubtotal)"
-          hint="Before discounts"
+          label="Monthly add-ons"
+          :value="formatCurrency(store.monthlyAddOnsTotal)"
+          hint="Combined optional charges"
         />
         <StatCard
-          label="Discount value"
-          :value="formatCurrency(store.annualDiscount)"
-          hint="Seasonal or enterprise deal"
+          label="Annual subtotal"
+          :value="formatCurrency(store.annualSubtotal)"
+          hint="Annualized subscription value"
         />
         <StatCard
           label="Annual total"
