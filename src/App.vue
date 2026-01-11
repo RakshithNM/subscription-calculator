@@ -27,7 +27,7 @@
     >
       <div class="modal__content">
         <div class="modal__header">
-          <h2 id="overview-title">Why this calculator exists</h2>
+          <h2 id="overview-title">Why this calculator exists?</h2>
           <button type="button" class="modal__close" @click="closeOverview">
             Close
           </button>
