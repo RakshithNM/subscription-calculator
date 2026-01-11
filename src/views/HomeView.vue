@@ -11,7 +11,7 @@
             :key="`amount-${index}`"
             class="form__field"
           >
-            <span>Subscription {{ index + 1 }}</span>
+            <span>{{ getSubscriptionLabel(index) }}</span>
             <div class="form__control">
               <input
                 :value="formatAmountInput(amount)"
@@ -93,6 +93,16 @@ const parseAmountInput = (value: string) => {
 
   const digits = trimmed.replace(/[^\d]/g, '');
   return digits ? Number.parseInt(digits, 10) : 0;
+};
+
+const baseSubscriptionLabels = ['Netflix', 'Jio Hotstar', 'Amazon Prime Video'];
+
+const getSubscriptionLabel = (index: number) => {
+  if (index < baseSubscriptionLabels.length) {
+    return baseSubscriptionLabels[index];
+  }
+
+  return `Subscription ${index - baseSubscriptionLabels.length + 1}`;
 };
 
 const updateAmount = (index: number, event: Event) => {
