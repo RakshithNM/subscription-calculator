@@ -11,7 +11,7 @@
             :key="`amount-${index}`"
             class="form__field"
           >
-            <span>Subscription {{ index + 1 }}</span>
+            <span>{{ index === 0 ? 'Netflix' : `Subscription ${index + 1}` }}</span>
             <div class="form__control">
               <input v-model.number="store.amounts[index]" type="number" min="0" step="1" />
               <span class="form__suffix">INR</span>
