@@ -6,28 +6,23 @@
         <p class="panel__subtitle">Enter the money you spend on subsciptions every month</p>
 
         <form class="form">
-          <label class="form__field">
-            <span>Amount</span>
-            <div class="form__control">
-              <input
-                v-model.number="store.monthlyPrice"
-                type="number"
-                min="1"
-                step="1"
-              />
-              <span class="form__suffix">USD</span>
-            </div>
-          </label>
-
           <label
             v-for="(amount, index) in store.amounts"
             :key="`amount-${index}`"
             class="form__field"
           >
-            <span>Amount {{ index + 1 }}</span>
+            <span>Subscription {{ index + 1 }}</span>
             <div class="form__control">
               <input v-model.number="store.amounts[index]" type="number" min="0" step="1" />
-              <span class="form__suffix">USD</span>
+              <span class="form__suffix">INR</span>
+              <button
+                v-if="store.amounts.length > 1"
+                class="form__remove"
+                type="button"
+                @click="store.removeAmount(index)"
+              >
+                Remove
+              </button>
             </div>
           </label>
 
@@ -72,9 +67,9 @@ import { useSubscriptionStore } from '@/stores/subscription';
 
 const store = useSubscriptionStore();
 
-const formatter = new Intl.NumberFormat('en-US', {
+const formatter = new Intl.NumberFormat('en-IN', {
   style: 'currency',
-  currency: 'USD',
+  currency: 'INR',
   maximumFractionDigits: 0
 });
 
