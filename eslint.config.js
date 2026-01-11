@@ -7,6 +7,16 @@ export default [
   js.configs.recommended,
   ...tseslint.configs.recommended,
   ...vue.configs['flat/recommended'],
+  {
+    languageOptions: {
+      parser: vueParser,
+      parserOptions: {
+        parser: tsParser,
+        ecmaVersion: 'latest',
+        sourceType: 'module'
+      }
+    }
+  },
   prettier,
   {
     files: ['**/*.{ts,tsx,vue}'],
