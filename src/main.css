@@ -302,6 +302,7 @@ body {
   .app__nav a,
   .app__nav button {
     width: 100%;
+    font-size: 18px;
   }
 
   .panel,
