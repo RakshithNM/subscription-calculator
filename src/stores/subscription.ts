@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 
 export const useSubscriptionStore = defineStore('subscription', {
   state: () => ({
-    amounts: [499]
+    amounts: [499, 299, 125]
   }),
   getters: {
     monthlyAddOnsTotal: (state) =>
