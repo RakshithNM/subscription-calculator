@@ -77,16 +77,8 @@ const years = 10;
 const formatCurrency = (value: number) => formatter.format(value);
 
 const niftySipValue = computed(() => {
-  const monthlyRate = annualReturn / 12;
+  const monthlyRate = Math.pow((1 + annualReturn), (1/12)) - 1;
   const totalMonths = years * 12;
-
-  if (monthlyRate === 0) {
-    return store.monthlyAddOnsTotal * totalMonths;
-  }
-
-  return (
-    store.monthlyAddOnsTotal *
-    ((Math.pow(1 + monthlyRate, totalMonths) - 1) / monthlyRate)
-  );
+  return store.monthlyAddOnsTotal * ((Math.pow(1 + monthlyRate, totalMonths) - 1) / monthlyRate) * (1 + monthlyRate);
 });
 </script>
