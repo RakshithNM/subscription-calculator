@@ -6,20 +6,12 @@
         <p class="panel__subtitle">Enter the money you spend on subscriptions every month</p>
 
         <form class="form">
-          <label
+          <div
             v-for="(amount, index) in store.amounts"
             :key="`amount-${index}`"
             class="form__field"
           >
             <span>Subscription {{ index + 1 }}</span>
-            <div class="form__control" :class="{ 'form__control--invalid': isLabelEmpty(index) }">
-              <input
-                :value="labelValue(index)"
-                type="text"
-                placeholder="Label (e.g. Netflix)"
-                @input="updateLabel(index, $event)"
-              />
-            </div>
             <div class="form__control">
               <input
                 :value="formatAmountInput(amount)"
@@ -38,7 +30,7 @@
                 Remove
               </button>
             </div>
-          </label>
+          </div>
 
           <button class="form__button" type="button" @click="store.addAmount">
             Add another subscription
@@ -92,14 +84,6 @@ const years = 10;
 
 const formatCurrency = (value: number) => formatter.format(value);
 const formatAmountInput = (value: number) => inputFormatter.format(Math.max(0, Math.round(value)));
-
-const labelValue = (index: number) => store.labels[index] ?? '';
-const isLabelEmpty = (index: number) => !labelValue(index).trim();
-
-const updateLabel = (index: number, event: Event) => {
-  const target = event.target as HTMLInputElement;
-  store.labels[index] = target.value;
-};
 
 const parseAmountInput = (value: string) => {
   const trimmed = value.trim();
