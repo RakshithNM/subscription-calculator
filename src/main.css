@@ -1,0 +1,172 @@
+:root {
+  color-scheme: light;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #0f172a;
+  background-color: #f8fafc;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #eef2ff 0%, #f8fafc 50%, #ffffff 100%);
+}
+
+#app {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 3.5rem 1.5rem 4rem;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.app__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.app__eyebrow {
+  font-size: 0.85rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #64748b;
+  margin-bottom: 0.5rem;
+}
+
+.app__subtitle {
+  max-width: 520px;
+  color: #475569;
+  margin-top: 0.5rem;
+}
+
+.app__nav a {
+  font-weight: 600;
+  color: #1e293b;
+  text-decoration: none;
+  padding: 0.6rem 1.1rem;
+  border-radius: 999px;
+  background: #e2e8f0;
+}
+
+.page__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.panel,
+.summary {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 2rem;
+  box-shadow: 0 30px 60px -40px rgba(15, 23, 42, 0.45);
+}
+
+.panel h2,
+.summary h3 {
+  font-size: 1.3rem;
+  margin-bottom: 0.75rem;
+}
+
+.panel__subtitle {
+  color: #64748b;
+  margin-bottom: 1.5rem;
+}
+
+.form {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.form__field {
+  display: grid;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.form__control {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: #f1f5f9;
+  padding: 0.65rem 0.85rem;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+.form__control input {
+  border: none;
+  background: transparent;
+  font-size: 1rem;
+  width: 100%;
+  color: #0f172a;
+  outline: none;
+}
+
+.form__suffix {
+  font-size: 0.85rem;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.summary {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.stat-card {
+  border-radius: 18px;
+  padding: 1.25rem 1.5rem;
+  background: linear-gradient(145deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
+.stat-card__label {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: #64748b;
+}
+
+.stat-card__value {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0.35rem 0 0.2rem;
+}
+
+.stat-card__hint {
+  color: #64748b;
+  font-size: 0.95rem;
+}
+
+.summary__note {
+  border-radius: 18px;
+  padding: 1.25rem 1.5rem;
+  background: #0f172a;
+  color: #e2e8f0;
+}
+
+.summary__note ul {
+  margin-top: 0.75rem;
+  padding-left: 1.1rem;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.summary__note li {
+  color: #cbd5f5;
+}
