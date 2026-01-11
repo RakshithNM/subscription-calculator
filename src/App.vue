@@ -2,10 +2,10 @@
   <div class="app">
     <header class="app__header">
       <div>
-        <p class="app__eyebrow">Subscription Lab</p>
+        <!-- <p class="app__eyebrow">Subscription Lab</p> -->
         <h1>Subscription Calculator</h1>
         <p class="app__subtitle">
-          Model annual revenue, team pricing, and discounts in a lightweight Vue + Vite setup.
+          Calculate the money you spend on subscriptions and go on a guilt trip
         </p>
       </div>
       <nav class="app__nav">
@@ -18,4 +18,5 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+</script>

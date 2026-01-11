@@ -2,14 +2,12 @@
   <section class="page">
     <div class="page__grid">
       <section class="panel">
-        <h2>Plan assumptions</h2>
-        <p class="panel__subtitle">
-          Adjust the levers below to see how subscription changes impact the annual total.
-        </p>
+        <h2>Monthly spend on subsciptions</h2>
+        <p class="panel__subtitle">Enter the money you spend on subsciptions every month</p>
 
         <form class="form">
           <label class="form__field">
-            <span>Monthly price per seat</span>
+            <span>Amount</span>
             <div class="form__control">
               <input
                 v-model.number="store.monthlyPrice"
