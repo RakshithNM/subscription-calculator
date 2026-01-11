@@ -108,6 +108,15 @@ body {
   border: 1px solid #e2e8f0;
 }
 
+.form__control--invalid {
+  border-color: #f97316;
+  box-shadow: 0 0 0 1px rgba(249, 115, 22, 0.35);
+}
+
+.form__control--invalid input {
+  color: #b45309;
+}
+
 .form__control input {
   border: none;
   background: transparent;
