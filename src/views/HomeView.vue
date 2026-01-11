@@ -2,8 +2,8 @@
   <section class="page">
     <div class="page__grid">
       <section class="panel">
-        <h2>Monthly spend on subsciptions</h2>
-        <p class="panel__subtitle">Enter the money you spend on subsciptions every month</p>
+        <h2>Monthly spend on subscriptions</h2>
+        <p class="panel__subtitle">Enter the money you spend on subscriptions every month</p>
 
         <form class="form">
           <label
