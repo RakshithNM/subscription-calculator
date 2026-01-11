@@ -35,7 +35,7 @@
         <p>
           This site was built to make the cost of actively running subscriptions feel
           real, and to quantify how much those recurring payments could have grown if
-          you had invested the same money in a broad index over the years.
+          you had invested the same money in a broad index(NIFTY 50) over the years.
         </p>
       </div>
     </div>
