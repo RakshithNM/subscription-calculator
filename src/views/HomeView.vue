@@ -44,12 +44,13 @@
           hint="Annualized subscription value"
         />
         <article class="summary__note">
-          <h3>Built-in goodies</h3>
-          <ul>
-            <li>Vue Router + Pinia wired and ready.</li>
-            <li>ESLint + Prettier preconfigured.</li>
-            <li>Vitest + Vue Test Utils for testing.</li>
-          </ul>
+          <h3>NIFTY SIP potential</h3>
+          <p>
+            If you invested this monthly total as a SIP and earned a 12.3% annualized return for
+            10 years, it could grow to
+            <strong>{{ formatCurrency(niftySipValue) }}</strong
+            >.
+          </p>
         </article>
       </section>
     </div>
@@ -57,6 +58,7 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import StatCard from '@/components/StatCard.vue';
 import { useSubscriptionStore } from '@/stores/subscription';
 
@@ -69,6 +71,22 @@ const formatter = new Intl.NumberFormat('en-IN', {
 });
 
 const subscriptionLabels = ['Netflix', 'Jio Hotstar', 'Amazon Prime Video'];
+const annualReturn = 0.123;
+const years = 10;
 
 const formatCurrency = (value: number) => formatter.format(value);
+
+const niftySipValue = computed(() => {
+  const monthlyRate = annualReturn / 12;
+  const totalMonths = years * 12;
+
+  if (monthlyRate === 0) {
+    return store.monthlyAddOnsTotal * totalMonths;
+  }
+
+  return (
+    store.monthlyAddOnsTotal *
+    ((Math.pow(1 + monthlyRate, totalMonths) - 1) / monthlyRate)
+  );
+});
 </script>
