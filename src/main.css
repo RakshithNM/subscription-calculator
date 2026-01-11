@@ -61,6 +61,7 @@ body {
 .app__nav a,
 .app__nav button {
   font-weight: 600;
+  font-size: 18px;
   color: #1e293b;
   text-decoration: none;
   padding: 0.6rem 1.1rem;
@@ -302,7 +303,6 @@ body {
   .app__nav a,
   .app__nav button {
     width: 100%;
-    font-size: 18px;
   }
 
   .panel,
