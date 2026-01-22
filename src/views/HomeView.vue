@@ -8,7 +8,7 @@
         <form class="form">
           <div
             v-for="(field, index) in store.baseFields"
-            :key="`amount-${index}`"
+            :key="field.id"
             class="form__field"
           >
             <span>{{ field.name }}</span>
@@ -25,14 +25,14 @@
                 v-if="store.baseFields.length > 1"
                 class="form__remove"
                 type="button"
-                @click="store.removeAmount(index)"
+                @click="removeAmount(index)"
               >
                 Remove
               </button>
             </div>
           </div>
 
-          <button class="form__button" type="button" @click="store.addAmount">
+          <button class="form__button" type="button" @click="addAmount">
             Add another subscription
           </button>
         </form>
@@ -52,8 +52,8 @@
         <article class="summary__note">
           <h3>NIFTY SIP potential</h3>
           <p>
-          If you invested this monthly total as a SIP and earned a {{ annualReturn * 100 }}% annualized return for {{ years }}
-            years, it could grow to
+            If you invested this monthly total as a SIP and earned a
+            {{ annualReturnPercent }}% annualized return for {{ years }} years, it could grow to
             <strong class="summary__highlight">{{ formatCurrency(niftySipValue) }}</strong>.
           </p>
         </article>
@@ -63,7 +63,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
+import { computed, ref } from 'vue';
 import StatCard from '@/components/StatCard.vue';
 import { useSubscriptionStore } from '@/stores/subscription';
 
@@ -80,6 +80,7 @@ const inputFormatter = new Intl.NumberFormat('en-IN', {
 
 const annualReturn = 0.13;
 const years = 10;
+const annualReturnPercent = Math.round(annualReturn * 100);
 
 const formatCurrency = (value: number) => formatter.format(value);
 const formatAmountInput = (value: number) => inputFormatter.format(Math.max(0, Math.round(value)));
@@ -96,35 +97,31 @@ const parseAmountInput = (value: string) => {
 
 const invalidInputs = ref<boolean[]>(store.baseFields.map(() => false));
 
-watch(
-  () => store.baseFields.length,
-  (length) => {
-    if (length > invalidInputs.value.length) {
-      invalidInputs.value = [
-        ...invalidInputs.value,
-        ...Array.from({ length: length - invalidInputs.value.length }, () => false)
-      ];
-      return;
-    }
-
-    if (length < invalidInputs.value.length) {
-      invalidInputs.value = invalidInputs.value.slice(0, length);
-    }
-  }
-);
-
 const updateAmount = (index: number, event: Event) => {
-  const target = event.target as HTMLInputElement;
-  const rawValue = target.value;
+  const target = event.currentTarget as HTMLInputElement;
+  const rawValue = target?.value ?? '';
   const isNegative = rawValue.trim().startsWith('-');
   invalidInputs.value[index] = isNegative;
-  const nextValue = parseAmountInput(target.value);
+  const nextValue = parseAmountInput(rawValue);
   store.baseFields[index].amount = nextValue;
+};
+
+const addAmount = () => {
+  store.addAmount();
+  invalidInputs.value.push(false);
+};
+
+const removeAmount = (index: number) => {
+  store.removeAmount(index);
+  invalidInputs.value.splice(index, 1);
 };
 
 const niftySipValue = computed(() => {
   const monthlyRate = Math.pow(1 + annualReturn, 1 / 12) - 1;
   const totalMonths = years * 12;
+  if (monthlyRate === 0) {
+    return store.monthlyAddOnsTotal * totalMonths;
+  }
   return (
     store.monthlyAddOnsTotal *
     ((Math.pow(1 + monthlyRate, totalMonths) - 1) / monthlyRate) *
